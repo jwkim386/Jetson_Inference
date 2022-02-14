@@ -3,22 +3,21 @@
 <br/>
 <sup>Image Recognition</sup></p>  
 
-# Classifying Images with ImageNet
-There are multiple types of deep learning networks available, including recognition, detection/localization, and semantic segmentation.  The first deep learning capability we're highlighting in this tutorial is **image recognition**, using classifcation networks that have been trained on large datasets to identify scenes and objects.
+# Classifying Images with ImageNet으로 이미지 분류하기
+
+사용가능한 여러 종류의 딥러닝 (networks)모델들이 있습니다. 가령, recognition(인식), detection/localization(검출/위치 찾기) 그리고 semantic segmentation이 있습니다. 처음으로 사용해볼 딥러닝 기술은 바로 위에 하이라이트 해두었듯이 **image recognition(이미지 분류/인식)** 입니다. 이는 아주 큰 데이터셋으로 이미 훈련이 된 분류 모델을 사용합니다.
 
 <img src="https://github.com/dusty-nv/jetson-inference/raw/pytorch/docs/images/imagenet.jpg" width="1000">
 
-The [`imageNet`](../c/imageNet.h) object accepts an input image and outputs the probability for each class.  Having been trained on the ImageNet ILSVRC dataset of **[1000 objects](../data/networks/ilsvrc12_synset_words.txt)**, the GoogleNet and ResNet-18 models were automatically downloaded during the build step.  See [below](#downloading-other-classification-models) for other classification models that can be downloaded and used as well.
+[`imageNet`](../c/imageNet.h)은 input(입력)으로 이미지를 받고 output(출력)으로 각 class에 대한 확률값을 얻습니다. **[1000 objects](../data/networks/ilsvrc12_synset_words.txt)** 의 ImageNet ILSVRC dataset으로 최근까지도 훈련돼 오던 GoogleNet 그리고 ResNet-18 모델이 이전에 빌드 하는 과정에서 자동으로 다운받아졌을 겁니다. 다음 [below](#downloading-other-classification-models)을 확인해서 다른 분류 모델도 살펴보시기 바랍니다.
 
-As an example of using the [`imageNet`](../c/imageNet.h) class, we provide sample programs for C++ and Python:
-
+[`imageNet`](../c/imageNet.h) class를 이용하는 예제로써, C++, Python으로 작성된 코드를 제공합니다.: 
 - [`imagenet.cpp`](../examples/imagenet/imagenet.cpp) (C++) 
 - [`imagenet.py`](../python/examples/imagenet.py) (Python) 
 
-These samples are able to classify images, videos, and camera feeds.  For more info about the various types of input/output streams supported, see the [Camera Streaming and Multimedia](aux-streaming.md) page.
+위 샘플들은 이미지, 비디오, 카메라 영상을 분류할 수 있습니다. 지원 되는 input/output stream에 대해 더 많은 정보는 다음 페이지를 참고하세요. [Camera Streaming and Multimedia](aux-streaming.md)
 
-
-### Using the ImageNet Program on Jetson
+### Jetson 에서의 ImageNet 프로그램 사용
 
 First, let's try using the `imagenet` program to test imageNet recognition on some example images.  It loads an image (or images), uses TensorRT and the `imageNet` class to perform the inference, then overlays the classification result and saves the output image.  The project comes with sample images for you to use located under the `images/` directory.
 
