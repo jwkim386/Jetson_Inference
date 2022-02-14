@@ -3,11 +3,11 @@
 <br/>
 <sup>System Setup</sup></p>  
 
-# Running the Docker Container
+# Docker Container Run(수행하기)
 
-Pre-built Docker container images for this project are hosted on [DockerHub](https://hub.docker.com/r/dustynv/jetson-inference/tags).  Alternatively, you can [Build the Project from Source](building-repo-2.md).   
+해당 프로젝트를 진행하기 위한 미리 빌드된 도커 컨테이너 이미지는 [DockerHub](https://hub.docker.com/r/dustynv/jetson-inference/tags)에 업로드 돼있습니다. 혹은 직접 빌드를 진행할 수도 있습니다. [Build the Project from Source](building-repo-2.md).
 
-Below are the currently available container tags:
+아래는 현재 사용 가능한 컨테이너들의 태그들입니다.
 
 | Container Tag                                                                           | L4T version |          JetPack version         |
 |-----------------------------------------------------------------------------------------|:-----------:|:--------------------------------:|
@@ -17,13 +17,13 @@ Below are the currently available container tags:
 | [`dustynv/jetson-inference:r32.4.3`](https://hub.docker.com/r/dustynv/jetson-inference/tags) | L4T R32.4.3 | JetPack 4.4 |
 
 
-> **note:** the version of JetPack-L4T that you have installed on your Jetson needs to match the tag above.  If you have a different version of JetPack-L4T installed, either upgrade to the latest JetPack or [Build the Project from Source](docs/building-repo-2.md) to compile the project directly. 
+> **note:** Jetson에 설치한 Jetpack-L4T의 버전과 위에서 제시한 L4T version이 일치해야합니다. 만약 다른 버전의 JetPack-L4T를 설치했다면 JetPack을 최신 버전으로 업그레이드 하거나 직접 빌드하여 사용하는 방법이 있습니다 [Build the Project from Source](docs/building-repo-2.md) to compile the project directly.  
 
-These containers use the [`l4t-pytorch`](https://ngc.nvidia.com/catalog/containers/nvidia:l4t-pytorch) base container, so support for transfer learning / re-training is already included.
+위 도커 컨테이너들은 [`l4t-pytorch`](https://ngc.nvidia.com/catalog/containers/nvidia:l4t-pytorch) 베이스 컨테이너로 사용하고 있습니다. 따라서 tranfer learning과 re-training에 대한 지원을 포함하고 있습니다. 
 
-## Launching the Container
+## 컨테이너 launch 하기
 
-Due to various mounts and devices needed to run the container, it's recommended to use the [`docker/run.sh`](../docker/run.sh) script to run the container:
+여러 마운트들과 장치들이 컨테이너를 run 하기 원하기 때문에 [`docker/run.sh`](../docker/run.sh) 스크립트를 사용하여 컨테이너를 run(수행)하는 것을 권장합니다.
 
 ```bash
 $ git clone --recursive https://github.com/dusty-nv/jetson-inference
@@ -31,33 +31,33 @@ $ cd jetson-inference
 $ docker/run.sh
 ```
 
-> **note:**  because of the Docker scripts used and the data directory structure that gets mounted into the container, you should still clone the project on your host device (i.e. even if not intending to build/install the project natively)
+> **note:**  도커 스크립트와 컨테이너 안에 마운트된 데이터 디렉토리 구조 때문에 호스트 디바이스에 프로젝트를 clone 해야합니다. 
 
-[`docker/run.sh`](../docker/run.sh) will automatically pull the correct container tag from DockerHub based on your currently-installed version of JetPack-L4T, and mount the appropriate data directories and devices so that you can use cameras/display/ect from within the container.  It will also prompt you to [download DNN models](building-repo-2.md#downloading-models) if you haven't already done so, which get mounted into the container to load.  This initial setup is only done once.
+[`docker/run.sh`](../docker/run.sh) 는 자동으로 알맞은 컨테이터 tag를 현재 설치된 JetPack-L4T 버전을 기반으로 도커 허브로 부터 pull(다운로드) 해옵니다. 그리고 데이터 디렉토리와 사용할 기기들 사용할 수 있도록 마운트합니다. 따라서 컨테이너 안에서 cameras/display/ect 로부터 카메라를 사용할 수 있습니다. 그리고 [download DNN models](building-repo-2.md#downloading-models) 하도록 입력창이 나타납니다. 만약 아직 아무런 입력창이 나타나지 않는다면 아직은 도커 컨테이너가 설치 중인 것입니다. 금방 끝납니다. 
 
 ### Mounted Data Volumes
 
-For reference, the following paths automatically get mounted from your host device into the container:
+참고로, 아래 경로들이 jetson 장치 자체에서 컨테이너로 마운트됩니다.
 
-* `jetson-inference/data` (stores the network models, serialized TensorRT engines, and test images)
-* `jetson-inference/python/training/classification/data` (stores classification training datasets)
-* `jetson-inference/python/training/classification/models` (stores classification models trained by PyTorch)
-* `jetson-inference/python/training/detection/ssd/data` (stores detection training datasets)
-* `jetson-inference/python/training/detection/ssd/models` (stores detection models trained by PyTorch)
+* `jetson-inference/data` (network models이 저장됨, serialized TensorRT engines, and test images)
+* `jetson-inference/python/training/classification/data` (classification training datasets 이 저장됨)
+* `jetson-inference/python/training/classification/models` (Pytorch로 훈련된 classification models 이 저장됨)
+* `jetson-inference/python/training/detection/ssd/data` (객체 검출 training datasets 이 저장됨)
+* `jetson-inference/python/training/detection/ssd/models` (pytorch로 훈련된 객체 검출 models 이 저장됨)
 
-These mounted volumes assure that the models and datasets are stored outside the container, and aren't lost when the container is shut down.
+위 마운트된 (volumes)디렉토리들은 컨테이너 밖에 저장돼있기 때문에 컨테이너가 꺼져도 (shut down) 삭제되지 않습니다. 
 
-If you wish to mount your own directory into the container, you can use the `--volume HOST_DIR:MOUNT_DIR` argument to [`docker/run.sh`](../docker/run.sh):
+만약 직접 다른 디렉토리를 컨테이너 안에 마운트하고 싶다면 다음과 같은 인자를 `--volume HOST_DIR:MOUNT_DIR` [`docker/run.sh`](../docker/run.sh) 명령에 전달할 수 있습니다.
 
 ```bash
 $ docker/run.sh --volume /my/host/path:/my/container/path    # these should be absolute paths
 ```
 
-For more info, run `docker/run.sh --help` or see the help text inside [`docker/run.sh`](../docker/run.sh)
+더 많은 정보가 필요하면 다음 파일을 직접 확인할 수 있습니다. [`docker/run.sh`](../docker/run.sh)
 
-## Running Applications
+## 어플리케이션 (Run)수행
 
-Once the container is up and running, you can then run example programs from the tutorial like normal inside the container:
+컨테이너가 올라가 있고 (running)실행되고 있다면, 이제는 튜토리얼의 예제 프로그램들을 컨테이너 내부에서 아래와 같이 실행시켜볼 수 있습니다. 
 
 ```bash
 # cd build/aarch64/bin
@@ -67,25 +67,24 @@ Once the container is up and running, you can then run example programs from the
 # (press Ctrl+D to exit the container)
 ```
 
-> **note:** when you are saving images from one of the sample programs (like imagenet or detectnet), it's recommended to save them to `images/test`.  These images will then be easily viewable from your host device in the `jetson-inference/data/images/test` directory.  
+> **note:** 만약 수행 결과 이미지를 저장하고 싶다면, `images/test` 해당 디렉토리 아래에 저장하는 것을 권장합니다. 그러면 해당 이미지를 호스트 기기의 다음 디렉토리에서 `jetson-inference/data/images/test` 쉽게 볼 수 있기 때문입니다. 
 
-## Building the Container
+## 컨테이너 빌드하기
 
-If you are following the Hello AI World tutorial, you can ignore this section and skip ahead to the next step.  But if you wish to re-build the container or build your own, you can use the [`docker/build.sh`](../docker/build.sh) script which builds the project's [`Dockerfile`](../Dockerfile):
+만약 Hello AI World 튜토리얼을 따라하는 중이라면 해당 섹션을 넘어가도 괜찮습니다. 그러나 직접 새로운 컨테이너 빌드하거나 re-build(다시 빌드) 하고 싶다면 다음 스크립트를 수행할 수 있습니다. [`docker/build.sh`](../docker/build.sh). 해당 스크립트는 이 프로젝트의 [`Dockerfile`](../Dockerfile) 파일을 빌드합니다.
 
 ```bash
 $ docker/build.sh
 ```
 
->  **note:** you should first set your default `docker-runtime` to nvidia, see [here](https://github.com/dusty-nv/jetson-containers#docker-default-runtime) for the details.
+>  **note:** 먼저 디폴트 `docker-runtime` 을 nvidia에 설정해두어야합니다. 자세한 사항은 다음을 참고하세요. [here](https://github.com/dusty-nv/jetson-containers#docker-default-runtime)
 
-You can also base your own container on this one by using the line `FROM dustynv/jetson-inference:r32.4.3` in your own Dockerfile.
+Dockerfile을 다음과 `FROM dustynv/jetson-inference:r32.4.3` 같이 수정하여 직접 생성하고 싶은 컨테이너의 (base)베이스를 이 컨테이너 위에 올릴 수 있습니다. 
 
 ## Getting Started
 
-If you have chosen to run the project inside the Docker container, you can proceed to [Classifying Images with ImageNet](imagenet-console-2.md).
-
-However, if you would prefer to install the project directly on your Jetson (outside of container), go to [Building the Project from Source](building-repo-2.md).
+도커 컨테이너 안에서 프로젝트를 진행하기로 했다면, 다음을 진행하세요. [ImageNet으로 이미지 분류하기](imagenet-console-2.md).
+그렇지 않고 소스코드로 직접 수행하기로 했다면, 다음을 참조하세요. [소스코드로부터 프로젝트 빌드하기](building-repo-2.md).
  
 ##
 <p align="right">Next | <b><a href="building-repo-2.md">Building the Project from Source</a></b>
