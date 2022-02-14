@@ -106,8 +106,9 @@ disk에 저장된 비디오 파일로도 실습을 진행할 수 있습니다. `
 
 ### 사용 가능한 Pre-Trained(미리 훈련된) 객체 검출 모델 
 
-Below is a table of the pre-trained object detection networks available for [download](building-repo-2.md#downloading-models), and the associated `--network` argument to `detectnet` used for loading the pre-trained models:
+아래 테이블은 [download](building-repo-2.md#downloading-models) 가능한 pre-trained(미리 훈련된) 모델들을 나타낸 것입니다. 또한 `--network` 플래그로 인자를 전달할 수 있습니다.
 
+모델:
 | Model                   | CLI argument       | NetworkType enum   | Object classes       |
 | ------------------------|--------------------|--------------------|----------------------|
 | SSD-Mobilenet-v1        | `ssd-mobilenet-v1` | `SSD_MOBILENET_V1` | 91 ([COCO classes](../data/networks/ssd_coco_labels.txt))     |
@@ -121,16 +122,16 @@ Below is a table of the pre-trained object detection networks available for [dow
 | multiped-500            | `multiped`         | `PEDNET_MULTI`     | pedestrians, luggage |
 | facenet-120             | `facenet`          | `FACENET`          | faces                |
 
-> **note**:  to download additional networks, run the [Model Downloader](building-repo-2.md#downloading-models) tool<br/>
+> **note**:  추가로 모델을 다운로드 받기 위해서는 [Model Downloader](building-repo-2.md#downloading-models) 를 실행하세요.<br/>
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`$ cd jetson-inference/tools` <br/>
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`$ ./download-models.sh` <br/>
 
 
-### Running Different Detection Models
+### 다른 모델로 Running(수행하기)
 
-You can specify which model to load by setting the `--network` flag on the command line to one of the corresponding CLI arguments from the table above.  By default, SSD-Mobilenet-v2 if the optional `--network` flag isn't specified.
+위 테이블에서 CLI arguments에 대응하는 하나의 모델을 커맨드 라인에서의 `--network` 에 전달함으로써 어떤 모델을 사용할지 specify(선택)할 수 있습니다. By default(기본값으로), SSD-Mobilenet-v2 모델은 `--network` 플래그를 사용할 필요가 없습니다.
 
-For example, if you chose to download SSD-Inception-v2 with the [Model Downloader](building-repo-2.md#downloading-models) tool, you can use it like so:
+예로, 만약 SSD-Inception-v2 모델을 [Model Downloader](building-repo-2.md#downloading-models) 툴을 통해 다운도르 받았다면 아래와 같이 수행할 수 있습니다.:
 
 ``` bash
 # C++
@@ -140,9 +141,9 @@ $ ./detectnet --network=ssd-inception-v2 input.jpg output.jpg
 $ ./detectnet.py --network=ssd-inception-v2 input.jpg output.jpg
 ```
 
-### Source Code
+### 소스 코드
 
-For reference, below is the source code to [`detectnet.py`](../python/examples/detectnet.py):
+참고로, 아래 코드는 [`detectnet.py`](../python/examples/detectnet.py)의 소스코드입니다.:
 
 ``` python
 import jetson.inference
@@ -202,7 +203,7 @@ while True:
 		break
 ```
 
-Next, we'll run object detection on a live camera stream.
+다음으로, 라이브 카메라 스트림을 통해 객체 검출을 진행하도록 하겠습니다.
 
 ##
 <p align="right">Next | <b><a href="detectnet-camera-2.md">Running the Live Camera Detection Demo</a></b>
