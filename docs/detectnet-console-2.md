@@ -29,9 +29,9 @@ The [`detectNet`](../c/detectNet.h) 은 이미지를 input(입력)으로 받고 
 	
 - optional `--threshold` 최소 threshold 값을  결정한다. (the default(기본값)은 `0.5`).
 
-If you're using the [Docker container](aux-docker.md), it's recommended to save the output images to the `images/test` mounted directory.  These images will then be easily viewable from your host device under `jetson-inference/data/images/test` (for more info, see [Mounted Data Volumes](aux-docker.md#mounted-data-volumes)). 
+만약 [Docker container](aux-docker.md)도커 컨테이너를 사용하고 있다면, output(결과) 이미지를 마운드 된 `images/test` 디렉토리 아래 저장하는 것을 권장합니다. 그런 이미지들은 호스트 기기에서 `jetson-inference/data/images/test` 디렉토리 아래서 쉽게 볼 수 있습니다. 더 자세한 정보는 다음 페이지를 확인하세요. (for more info, see [Mounted Data Volumes](aux-docker.md#mounted-data-volumes)).
 
-Here are some examples of detecting pedestrians in images with the default SSD-Mobilenet-v2 model:
+아래는 기본 모델인 SSD-Mobilenet-v2 를 이용하여 보행자를 검출하는 예제입니다.
 
 ``` bash
 # C++
@@ -53,18 +53,18 @@ $ ./detectnet.py images/peds_1.jpg images/test/output.jpg
 
 <img src="https://github.com/dusty-nv/jetson-inference/raw/dev/docs/images/detectnet-ssd-peds-1.jpg" >
 
-> **note**:  the first time you run each model, TensorRT will take a few minutes to optimize the network. <br/>
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this optimized network file is then cached to disk, so future runs using the model will load faster.
+> **note**:  모델을 처음 실행시키면 network(모델)을 TensorRT가 모델을 optimize(최적화)하기 때문에 몇 분 정도가 소요될 수 있습니다.<br/>
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;해당 최적화된 network(모델)은 disk에 캐싱되며, 이후에는 금방 실행됩니다.
 
-Below are more detection examples output from the console programs.  The [91-class](../data/networks/ssd_coco_labels.txt) MS COCO dataset that the SSD-based models were trained on include people, vehicles, animals, and assorted types of household objects to detect.
+아래는 콘솔 프로그램들의 결과들입니다. SSD를 기반으로한 모델이 훈련된 [91-class](../data/networks/ssd_coco_labels.txt)개의 클래스를 갖는 MS COCO dataset은 사람, 차량, 동물과 여러 가정물품의 객체를 포함하고 있습니다. 
 
 <img src="https://github.com/dusty-nv/jetson-inference/raw/dev/docs/images/detectnet-animals.jpg" >
 
-Various images are found under `images/` for testing, such as `cat_*.jpg`, `dog_*.jpg`, `horse_*.jpg`, `peds_*.jpg`, ect. 
+다양한 이미지들이 `images/` 아래 테스트를 위해 제공됩니다. 이는 `cat_*.jpg`, `dog_*.jpg`, `horse_*.jpg`, `peds_*.jpg` 등등입니다.
 
-### Processing a Directory or Sequence of Images
+### 디렉토리 혹은 연속된 이미지들의 Processing(처리)
 
-If you have multiple images that you'd like to process at one time, you can launch the `detectnet` program with the path to a directory that contains images or a wildcard sequence:
+만약 한번에 처리해야할 여러 이미지들이 있다면, `detectnet`을 수행할 때 디렉토리의 경로나 wildcard sequence(와일드카드 시퀀스)로 인자를 줄 수 있다.:
 
 ```bash
 # C++
@@ -74,13 +74,13 @@ If you have multiple images that you'd like to process at one time, you can laun
 ./detectnet.py "images/peds_*.jpg" images/test/peds_output_%i.jpg
 ```
 
-> **note:** when using wildcards, always enclose it in quotes (`"*.jpg"`). Otherwise, the OS will auto-expand the sequence and modify the order of arguments on the command-line, which may result in one of the input images being overwritten by the output.
+> **note:** 와일드카드를 사용할 때는 quotes(쌍따옴표)(`"*.jpg"`)로 잘 감쌀 수 있도록 합니다. 그리고, OS는 자동으로 해당 인자를 expand(확장)하여 커맨드 라인에 주어진 인자와 순서를 수정합니다. 이는 결과를 덮어쓸 수도 있으니 주의해야합니다.
 
-For more info about loading/saving sequences of images, see the [Camera Streaming and Multimedia](aux-streaming.md#sequences) page.
+이미지들을 loading/saving 하는 것에 대한 더 자세한 정보는 다음 페이지를 참고하세요.  [Camera Streaming and Multimedia](aux-streaming.md#sequences)
 
-### Processing Video Files
+### 비디오 파일 Processing(처리)
 
-You can also process videos from disk.  There are some test videos found on your Jetson under `/usr/share/visionworks/sources/data`
+disk에 저장된 비디오 파일로도 실습을 진행할 수 있습니다. `/usr/share/visionworks/sources/data` 아래에 테스트용 영상이 있습니다.
 
 ``` bash
 # C++
@@ -102,9 +102,9 @@ You can also process videos from disk.  There are some test videos found on your
 
 <a href="https://www.youtube.com/watch?v=iB86W-kloPE" target="_blank"><img src=https://github.com/dusty-nv/jetson-inference/raw/dev/docs/images/detectnet-ssd-parking-video.jpg width="585"></a>
 
-Remember that you can use the `--threshold` setting to change the detection sensitivity up or down (the default is 0.5).
+검출 sensitivity(민감도)를 조정하기 위해 `--threshold` 변경해볼 수 있음을 기억하세요.
 
-### Pre-trained Detection Models Available
+### 사용 가능한 Pre-Trained(미리 훈련된) 객체 검출 모델 
 
 Below is a table of the pre-trained object detection networks available for [download](building-repo-2.md#downloading-models), and the associated `--network` argument to `detectnet` used for loading the pre-trained models:
 
