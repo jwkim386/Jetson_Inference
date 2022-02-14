@@ -3,29 +3,31 @@
 <br/>
 <sup>Object Detection</sup></s></p>
 
-# Locating Objects with DetectNet
-The previous recognition examples output class probabilities representing the entire input image.  Next we're going to focus on **object detection**, and finding where in the frame various objects are located by extracting their bounding boxes.  Unlike image classification, object detection networks are capable of detecting many different objects per frame.
+# DetectNet 으로 객체의 위치 찾기
+
+이전의 recognition(인식) 예제에서는 전체 이미지에 대한 객체의 클래스 확률을 구했습니다. 지금부터는 **object detection(객체 검출)** 에 집중하고자 합니다. 그리고 매 프레임에 객체가 어디있는지 bounding box를 구함으로써 알아보겠습니다. 이미지 분류와는 다르게 객체 검출에서는 하나의 프레임에서 많은 객체를 구분해낼 수 있습니다.
 
 <img src="https://github.com/dusty-nv/jetson-inference/raw/dev/docs/images/detectnet.jpg" >
 
-The [`detectNet`](../c/detectNet.h) object accepts an image as input, and outputs a list of coordinates of the detected bounding boxes along with their classes and confidence values.  [`detectNet`](../c/detectNet.h) is available to use from [Python](https://rawgit.com/dusty-nv/jetson-inference/python/docs/html/python/jetson.inference.html#detectNet) and [C++](../c/detectNet.h).  See below for various [pre-trained detection models](#pre-trained-detection-models-available)  available for download.  The default model used is a [91-class](../data/networks/ssd_coco_labels.txt) SSD-Mobilenet-v2 model trained on the MS COCO dataset, which achieves realtime inferencing performance on Jetson with TensorRT. 
+The [`detectNet`](../c/detectNet.h) 은 이미지를 input(입력)으로 받고 output(출력)은 검출된 객체들의 bounding box의 좌표들과 이에 대응하는 확률값입니다. [`detectNet`](../c/detectNet.h) 은 [Python](https://rawgit.com/dusty-nv/jetson-inference/python/docs/html/python/jetson.inference.html#detectNet) 혹은 [C++](../c/detectNet.h) 로 사용 가능합니다.  아래 다양한 모델들을 살펴볼 수 있습니다. [pre-trained detection models](#pre-trained-detection-models-available) 들을 다운로드 받을 수 있습니다. default(기본) 모델은 [91-class](../data/networks/ssd_coco_labels.txt) 개의 클래스를 검출할 수 있는 SSD-Mobilenet-v2 모델입니다. 이는 MS COCO dataset으로 훈련되었고 TensorRT로 실시간처리 성능을 만족하였습니다. 
 
-As examples of using the `detectNet` class, we provide sample programs for C++ and Python:
+`detectNet`의 사용 예제로써 C++, Python 샘플 프로그램을 제공합니다.:
 
 - [`detectnet.cpp`](../examples/detectnet/detectnet.cpp) (C++) 
 - [`detectnet.py`](../python/examples/detectnet.py) (Python) 
 
-These samples are able to detect objects in images, videos, and camera feeds.  For more info about the various types of input/output streams supported, see the [Camera Streaming and Multimedia](aux-streaming.md) page.
+위 샘플들은 이미지, 비디오, 카메라 스트리밍에 대해 사용 가능합니다. 다양한 타입의 input/output 스트림 지원에 대한 정보를 얻고 싶으면 다음 페이지를 방문하세요. [Camera Streaming and Multimedia](aux-streaming.md)
 
-### Detecting Objects from Images
+### 이미지에서 객체 검출하기
 
-First, let's try using the `detectnet` program to locates objects in static images.  In addition to the input/output paths, there are some additional command-line options:
+먼저 `detectnet` 프로그램을 이미지 한 장에 대해서 적용해봅시다. input/output 경로 외에도 몇몇 커맨드 라인 옵션들이 있습니다.
 
-- optional `--network` flag which changes the [detection model](detectnet-console-2.md#pre-trained-detection-models-available) being used (the default is SSD-Mobilenet-v2).
-- optional `--overlay` flag which can be comma-separated combinations of `box`, `labels`, `conf`, and `none`
-	- The default is `--overlay=box,labels,conf` which displays boxes, labels, and confidence values
-- optional `--alpha` value which sets the alpha blending value used during overlay (the default is `120`).
-- optional `--threshold` value which sets the minimum threshold for detection (the default is `0.5`).  
+옵션:
+- optional `--network` 플래그는 사용할 [detection model](detectnet-console-2.md#pre-trained-detection-models-available) 을 바꿉니다.
+- optional `--overlay` 플래그는 컴마로 구분하는 `box`, `labels`, `conf`나 `none`과 같은 조합들로 주어질 수 있습니다. default(기본값)은 `--overlay=box,labels,conf` 이며 box, label,(confidence)확률값을 출력합니다.	
+- optional `--alpha` 값은 overlay 할 때 알파값을 결정합니다. (the default(기본값)은 `120`).	
+	
+- optional `--threshold` 최소 threshold 값을  결정한다. (the default(기본값)은 `0.5`).
 
 If you're using the [Docker container](aux-docker.md), it's recommended to save the output images to the `images/test` mounted directory.  These images will then be easily viewable from your host device under `jetson-inference/data/images/test` (for more info, see [Mounted Data Volumes](aux-docker.md#mounted-data-volumes)). 
 
