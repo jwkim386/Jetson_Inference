@@ -3,12 +3,13 @@
 <br/>
 <sup>System Setup</sup></p> 
 
-# Setting up Jetson with JetPack
+# Jetson 에 JetPack 설정하기
 
-> **note**:  if your Jetson Nano or Xavier NX has already been setup with the [SD card image](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write) (which includes JetPack), or your Jetson has already been setup with JetPack, you can skip this step and continue to [`Running the Docker Container`](aux-docker.md) or [`Building the Project`](building-repo-2.md)
+> **note**:  이미 Jetson Nano나 Xavier, NX에 SD카드로 셋업이 되어있거나, 이미 JetPack이 설치되어있다면 해당 과정을 건너 뛰고 다음 과정인 [`Running the Docker Container`](aux-docker.md)  나 [`Building the Project`](building-repo-2.md) 로 건너뛰셔도 좋습니다.
 
-NVIDIA **[JetPack](https://developer.nvidia.com/embedded/jetpack)** is a comprehensive SDK for Jetson for both developing and deploying AI and computer vision applications.  JetPack simplifies installation of the OS and drivers and contains the following components:
+NVIDIA **[JetPack](https://developer.nvidia.com/embedded/jetpack)** 은 Jetson에서 컴퓨터 비전 어플리케이션을 개발하거나 사용하기 위한 종합 SDK입니다. JetPack은 아래 요소들을 포함하는 OS나  driver를 설치하는 일을 간단히 합니다.
 
+요소:
 - L4T Kernel / BSP
 - CUDA Toolkit
 - cuDNN
@@ -17,34 +18,33 @@ NVIDIA **[JetPack](https://developer.nvidia.com/embedded/jetpack)** is a compreh
 - VisionWorks
 - Multimedia API's
 
-Before attempting to use the Docker container or build the repo, make sure that your Jetson has been setup with the latest version of JetPack.
+도커 컨테이너를 사용하고 repo를 빌드하기 전에 최신 버전의 JetPack을 설치했는지 꼭 확인하세요.
 
-### Jetson Nano and Jetson Xavier NX
+### Jetson Nano 와 Jetson Xavier NX
+Jetson Nano, Xavier, NX의 개발키트를 설치하는 방법으로 가장 권장되는 방법은 **[SD card images](https://developer.nvidia.com/embedded/downloads)** 를 이용해 설치하는 것입니다. 
 
-The recommended install method for the Jetson Nano Developer Kit and Jetson Xavier NX Developer Kit is to use the **[SD card images](https://developer.nvidia.com/embedded/downloads)**.  
+JetPack 구성 요소가 이미 설치되어 있으며 Windows, Mac 또는 Linux PC에서 플래시할 수 있습니다. 아직 아무것도 설치 돼있지 않다면 각 Jetson에 따라 제공되는 가이드를 따라 수행하세요.
 
-It comes pre-populated with the JetPack components already installed and can be flashed from a Windows, Mac, or Linux PC.  If you haven't already, follow the Getting Started guide for your respective Jetson to flash the SD card image and setup your device:
-
-* [Getting Started with Jetson Nano Developer Kit](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit)
-* [Getting Started with Jetson Nano 2GB Developer Kit](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-2gb-devkit)
-* [Jetson Xavier NX User Guide](https://developer.nvidia.com/embedded/downloads#?search=Jetson%20Xavier%20NX%20Developer%20Kit%20User%20Guide) 
+* [Jetson Nano Developer Kit 으로 시작하기](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit)
+* [Jetson Nano 2GB Developer Kit 으로 시작하기](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-2gb-devkit)
+* [Jetson Xavier NX 사용자 가이드](https://developer.nvidia.com/embedded/downloads#?search=Jetson%20Xavier%20NX%20Developer%20Kit%20User%20Guide) 
 
 ### Jetson TX1/TX2 and AGX Xavier
 
-Other Jetson's should be flashed by downloading the [NVIDIA SDK Manager](https://developer.nvidia.com/embedded/dlc/nv-sdk-manager) to a host PC running Ubuntu 16.04 x86_64 or Ubuntu 18.04 x86_64.  Connect the Micro-USB or USB-C port to your host PC and enter the device into Recovery Mode.
+다른 jetson들은 다음 [NVIDIA SDK Manager](https://developer.nvidia.com/embedded/dlc/nv-sdk-manager)를 Ubuntu 16.04 x86_64 나 Ubuntu 18.04 x86_64가 설치돼있는 host PC에서 다운받아 플래시 해야합니다. Micro-USB나 USB-C 를 host PC에 연결하고 jetson을 Recovery Mode에 진입하게 하세요. 
 
 <img src="https://github.com/dusty-nv/jetson-inference/raw/python/docs/images/nvsdkm.png" width="800">
 
-For more details, please refer to the **[NVIDIA SDK Manager Documentation](https://docs.nvidia.com/sdk-manager/index.html)**.
+상세한 내용은 다음 문서를 확인하세요. **[NVIDIA SDK Manager Documentation](https://docs.nvidia.com/sdk-manager/index.html)**.
 
-### Getting the Project
+### 프로젝트 시작
 
-There are two ways to use the jetson-inference project:   
+프로젝트 앞서서 사용할 수 있는 방법이 2가지가 있습니다.
 
-* Run the pre-built [Docker Container](aux-docker.md)
-* [Build the Project from Source](building-repo-2.md)
+* 미리 빌드된 [Docker Container](aux-docker.md)를 수행하는 방법
+* 소스코드로부터 직접 빌드하기 [Build the Project from Source](building-repo-2.md)
 
-Using the container is recommended initially to get up & running as fast as possible (and the container already includes PyTorch installed), however if you are more comfortable with native development then compiling the project yourself is not complicated either.
+도커 컨테이너를 사용하는 것이 처음에는 가능한 빨리 수행하기에 권장되는 방법입니다. (Pytorch도 이미 설치돼있습니다.) 그러나 Jetson에 익숙하다면 직접 컴파일하여 빌드하는 것도 그렇게 복잡하지 않습니다.
 
 ##
 <p align="right">Next | <b><a href="building-repo-2.md">Building the Project from Source</a></b>
