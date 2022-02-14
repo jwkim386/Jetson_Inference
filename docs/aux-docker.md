@@ -83,8 +83,8 @@ Dockerfile을 다음과 `FROM dustynv/jetson-inference:r32.4.3` 같이 수정하
 
 ## Getting Started
 
-도커 컨테이너 안에서 프로젝트를 진행하기로 했다면, 다음을 진행하세요. [ImageNet으로 이미지 분류하기](imagenet-console-2.md).
-그렇지 않고 소스코드로 직접 수행하기로 했다면, 다음을 참조하세요. [소스코드로부터 프로젝트 빌드하기](building-repo-2.md).
+도커 컨테이너 안에서 프로젝트를 진행하기로 했다면, 다음을 진행하세요. [ImageNet으로 이미지 분류하기](imagenet-console-2.md).<br>
+그렇지 않고 소스코드로 직접 수행하기로 했다면, 다음을 참조하세요. [소스코드로부터 프로젝트 빌드하기](building-repo-2.md).<br>
  
 ##
 <p align="right">Next | <b><a href="building-repo-2.md">Building the Project from Source</a></b>
