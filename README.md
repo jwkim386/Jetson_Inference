@@ -1,15 +1,18 @@
+* 해당 repo는 2022-02-14에 작성되었습니다. 새로운 내용이 업데이트 되었을 수 있으니 확인해보시기 바랍니다.
+* 오역이 있다면 언제든 피드백 주세요~
+
 <img src="https://github.com/dusty-nv/jetson-inference/raw/master/docs/images/deep-vision-header.jpg" width="100%">
 
 # Deploying Deep Learning
-Welcome to our instructional guide for inference and realtime [DNN vision](#api-reference) library for NVIDIA **[Jetson Nano/TX1/TX2/Xavier NX/AGX Xavier](http://www.nvidia.com/object/embedded-systems.html)**.
+NVIDIA의 **[Jetson Nano/TX1/TX2/Xavier NX/AGX Xavier](http://www.nvidia.com/object/embedded-systems.html)** 를 사용한 inference(추론) 와 realtime(실시간) [DNN vision](#api-reference) library를 위한 guide에 오신걸 환영합니다.
 
-This repo uses NVIDIA **[TensorRT](https://developer.nvidia.com/tensorrt)** for efficiently deploying neural networks onto the embedded Jetson platform, improving performance and power efficiency using graph optimizations, kernel fusion, and FP16/INT8 precision.
+해당 repo는 NVIDIA **[TensorRT](https://developer.nvidia.com/tensorrt)** 를 사용합니다. 이는 graph optimizations, kernel fusion, FP16/INT8 precision 을 적용함으로써 Jetson 플랫폼에서 인공신경망을 더 빠르게, 더 적은 에너지로 사용하기 위해서 입니다.
 
-Vision primitives, such as [`imageNet`](docs/imagenet-console-2.md) for image recognition, [`detectNet`](docs/detectnet-console-2.md) for object detection, [`segNet`](docs/segnet-console-2.md) for semantic segmentation, and [`poseNet`](docs/posenet.md) for pose estimation inherit from the shared [`tensorNet`](c/tensorNet.h) object.  Examples are provided for streaming from live camera feed and processing images.  See the **[API Reference](#api-reference)** section for detailed reference documentation of the C++ and Python libraries. 
+비전의 기초, [`imageNet`](docs/imagenet-console-2.md) for image recognition(이미지 분류), [`detectNet`](docs/detectnet-console-2.md) for object detection(객체 검출), [`segNet`](docs/segnet-console-2.md) for semantic segmentation, and [`poseNet`](docs/posenet.md) for pose estimation, 각 모델들은 shared [`tensorNet`](c/tensorNet.h) object 에서 상속되어 사용됩니다. 예제로 live camera로부터 streaming 받는 것과 이미지를 처리하는 것이 제공됩니다. 다음 **[API Reference](#api-reference)** 에서 C++, Python에 대한 자세한 자료를 찾아보실 수 있습니다. 
 
 <img src="https://github.com/dusty-nv/jetson-inference/raw/dev/docs/images/deep-vision-primitives.jpg">
 
-Follow the [Hello AI World](#hello-ai-world) tutorial for running inference and transfer learning onboard your Jetson, including collecting your own datasets and training your own models.  It covers image classification, object detection, semantic segmentation, pose estimation, and mono depth.
+[Hello AI World](#hello-ai-world) 에서는 jetson platform에서 inference(추론)과 transfer learning을 하는 튜토리얼을 제공합니다. 여기서 직접 datasets을 수집하고 인공신경망을 직접 학습시켜볼 수 있습니다. 이 튜토리얼은 image classification(이미지 분류), object detection(객체 검출), sematic segmentation, pose estimation, mono depth를 다룹니다.
 
 ### Table of Contents
 
@@ -27,41 +30,41 @@ Follow the [Hello AI World](#hello-ai-world) tutorial for running inference and 
 
 ## Hello AI World
 
-Hello AI World can be run completely onboard your Jetson, including inferencing with TensorRT and transfer learning with PyTorch.  The inference portion of Hello AI World - which includes coding your own image classification and object detection applications for Python or C++, and live camera demos - can be run on your Jetson in roughly two hours or less, while transfer learning is best left to leave running overnight.
+Hello AI Wolrd는 jetson 보드에서 수행될 수 있으며, 이는 TensorRT를 통한 inference(추론)과 Pytorch를 이용한 transfer learning을 포함합니다. inference 부분은 Python과 C++로 직접 image classfication(이미지 분류)와 object detectino(객체 검출) application 코드를 작성하는 것으로 이루어져있고 약 2시간 정도가 소요됩니다. 반면, tranfer learning은 밤새 수행시켜주시는 것이 좋습니다.
 
-#### System Setup
+#### 시스템 설정
 
-* [Setting up Jetson with JetPack](docs/jetpack-setup-2.md)
-* [Running the Docker Container](docs/aux-docker.md)
-* [Building the Project from Source](docs/building-repo-2.md)
+* [Jetson 에 JetPack 설정하기](docs/jetpack-setup-2.md)
+* [Docker Container 실행시키기](docs/aux-docker.md)
+* [소스코드에서부터 프로젝트 설계하기](docs/building-repo-2.md)
 
-#### Inference
+#### Inference(추론)
 
-* [Classifying Images with ImageNet](docs/imagenet-console-2.md)
-	* [Using the ImageNet Program on Jetson](docs/imagenet-console-2.md)
-	* [Coding Your Own Image Recognition Program (Python)](docs/imagenet-example-python-2.md)
-	* [Coding Your Own Image Recognition Program (C++)](docs/imagenet-example-2.md)
-	* [Running the Live Camera Recognition Demo](docs/imagenet-camera-2.md)
-* [Locating Objects with DetectNet](docs/detectnet-console-2.md)
-	* [Detecting Objects from Images](docs/detectnet-console-2.md#detecting-objects-from-the-command-line)
-	* [Running the Live Camera Detection Demo](docs/detectnet-camera-2.md)
-	* [Coding Your Own Object Detection Program](docs/detectnet-example-2.md)
-* [Semantic Segmentation with SegNet](docs/segnet-console-2.md)
-	* [Segmenting Images from the Command Line](docs/segnet-console-2.md#segmenting-images-from-the-command-line)
-	* [Running the Live Camera Segmentation Demo](docs/segnet-camera-2.md)
-* [Pose Estimation with PoseNet](docs/posenet.md)
-* [Monocular Depth with DepthNet](docs/depthnet.md)
+* [ImageNet 데이터셋으로 이미지 분류하기](docs/imagenet-console-2.md)
+	* [Jetson에서 ImageNet 프로그램 사용하기](docs/imagenet-console-2.md)
+	* [직접 Image 인식 프로그램 코딩하기 (Python)](docs/imagenet-example-python-2.md)
+	* [직접 Image 인식 프로그램 코딩하기 (C++)](docs/imagenet-example-2.md)
+	* [라이브 카메라로 하는 이미지 인식 데모 수행하기](docs/imagenet-camera-2.md)
+* [DetectNet으로 객체 위치 찾기](docs/detectnet-console-2.md)
+	* [이미지로부터 객체 검출하기](docs/detectnet-console-2.md#detecting-objects-from-the-command-line)
+	* [라이브 카메라로 하는 객체 인식 데모 수행하기](docs/detectnet-camera-2.md)
+	* [직접 객체 검출 프로그램 코딩하기](docs/detectnet-example-2.md)
+* [SegNet으로 하는 Semantic Segmentation](docs/segnet-console-2.md)
+	* [Command Line으로 이미지들 Segmentation하기](docs/segnet-console-2.md#segmenting-images-from-the-command-line)
+	* [라이브 카메라로 Segmentation 데모 수행하기](docs/segnet-camera-2.md)
+* [PoseNet으로 하는 Pose Estimation](docs/posenet.md)
+* [DepthNet으로 하는 Monocular Depth](docs/depthnet.md)
 
-#### Training
+#### Training(훈련)
 
-* [Transfer Learning with PyTorch](docs/pytorch-transfer-learning.md)
-* Classification/Recognition (ResNet-18)
-	* [Re-training on the Cat/Dog Dataset](docs/pytorch-cat-dog.md)
-	* [Re-training on the PlantCLEF Dataset](docs/pytorch-plants.md)
-	* [Collecting your own Classification Datasets](docs/pytorch-collect.md)
+* [PyTorch로 하는 Transfer Learning](docs/pytorch-transfer-learning.md)
+* Classification(분류)/Recognition(인식) (ResNet-18)
+	* [Cat/Dog Dataset으로 다시 훈련하기](docs/pytorch-cat-dog.md)
+	* [PlantCLEF Dataset으로 다시 훈련하기](docs/pytorch-plants.md)
+	* [Classification(이미지 분류) Datasets 직접 수집하기](docs/pytorch-collect.md)
 * Object Detection (SSD-Mobilenet)
-	* [Re-training SSD-Mobilenet](docs/pytorch-ssd.md)
-	* [Collecting your own Detection Datasets](docs/pytorch-collect-detection.md)
+	* [SSD-Mobilenet 다시 훈련하기](docs/pytorch-ssd.md)
+	* [Detection Datasets 직접 수집하기](docs/pytorch-collect-detection.md)
 
 #### Appendix
 
@@ -101,9 +104,9 @@ Below are links to reference documentation for the [C++](https://rawgit.com/dust
 * [C++](https://rawgit.com/dusty-nv/jetson-inference/dev/docs/html/group__util.html)
 * [Python](https://rawgit.com/dusty-nv/jetson-inference/dev/docs/html/python/jetson.utils.html)
 
-These libraries are able to be used in external projects by linking to `libjetson-inference` and `libjetson-utils`.
+위 라이브러리들은 `libjetson-inference` and `libjetson-utils`를 링크함으로써 다른 프로젝트에서도 사용할 수 있습니다.
 
-## Code Examples
+## 코드 예제
 
 Introductory code walkthroughs of using the library are covered during these steps of the Hello AI World tutorial:
 
@@ -126,7 +129,7 @@ These examples will automatically be compiled while [Building the Project from S
 
 ## Pre-Trained Models
 
-The project comes with a number of pre-trained models that are available through the [**Model Downloader**](docs/building-repo-2.md#downloading-models) tool:
+이 프로젝트는 여러 pre-trained models이 함께 제공되며 해당 툴을 사용하여 다운로드 받을 수 있습니다. [**Model Downloader**](docs/building-repo-2.md#downloading-models)
 
 #### Image Recognition
 
