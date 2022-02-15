@@ -3,35 +3,36 @@
 <br/>
 <sup>Mono Depth</sup></s></p>
 
-# Monocular Depth with DepthNet
-Depth sensing is useful for tasks such as mapping, navigation and obstacle detection, however it historically required a stereo camera or RGB-D camera.  There are now DNNs that are able to infer relative depth from a single monocular image (aka mono depth).  See the [MIT FastDepth](https://arxiv.org/abs/1903.03273) paper for one such approach to accomplishing this using Fully-Convolutional Networks (FCNs).
+# DepthNet으로 하는 Monocular(하나의 카메라로 하는) Depth 
+
+물체가 얼마나 멀리 떨어져있는지를 나타내는 Depth sensing은 맵핑이나, 내비게이션, 장애물 검출등에 있어서 유용합니다. 그러나 이전에는 스테레오 카메라나 RGB-D 카메라가 필요했습니다. 그러나 이제는 딥러닝이 등장하면서 하나의 카메라(monocular)로 상대적인 거리를 추정할 수 있게 되었습니다. 이를 mono depth 라고합니다. 자세한 내용은 다음 페이지를 참고하세요. [MIT FastDepth](https://arxiv.org/abs/1903.03273)
 
 <img src="https://github.com/dusty-nv/jetson-inference/raw/dev/docs/images/depthnet-0.jpg">
 
-The [`depthNet`](../c/depthNet.h) object accepts a single color image as input, and outputs the depth map.  The depth map is colorized for visualization, but the raw [depth field](#getting-the-raw-depth-field) is also accessible for directly accessing the depths. [`depthNet`](../c/depthNet.h) is available to use from [Python](https://rawgit.com/dusty-nv/jetson-inference/dev/docs/html/python/jetson.inference.html#depthNet) and [C++](../c/depthNet.h).
+The [`depthNet`](../c/depthNet.h) 는 한 장의 컬러 이미지를 input(입력)으로 받고 depth map(깊이 맵)을 output(출력)으로 합니다. 해당 depth map(깊이 맵)은 사람이 보기 좋게 색처리가 돼있습니다. 하지만 색처리되지 않은 depth map(깊이 맵)의 depth(깊이 값)에도 접근할 수 있습니다. 이는 [Python](https://rawgit.com/dusty-nv/jetson-inference/dev/docs/html/python/jetson.inference.html#depthNet) and [C++](../c/depthNet.h). 으로 사용 가능합니다.
 
-As examples of using the `depthNet` class, we provide sample programs for C++ and Python:
+실행 예제로 C++, Python 코드가 제공됩니다.
 
 - [`depthnet.cpp`](../examples/depthnet/depthnet.cpp) (C++) 
 - [`depthnet.py`](../python/examples/depthnet.py) (Python) 
 
-These samples are able to infer depth from images, videos, and camera feeds.  For more info about the various types of input/output streams supported, see the [Camera Streaming and Multimedia](aux-streaming.md) page.
+위 샘플들은 이미지, 비디오, 카메라 스트리밍을 infer(추론)할 수 있습니다. 더 자세한 input/output 스트림에 대한 정보는 다음 페이지를 참고하세요. [Camera Streaming and Multimedia](aux-streaming.md)
 
-## Mono Depth on Images
+## 이미지에 대한 Mono Depth 
 
-First, let's try running the `depthnet` sample on some examples images.  In addition to the input/output paths, there are some additional command-line options that are optional:
+먼저 이미지에 대해 `depthnet`을 적용해봅시다. input/output 경로 외에도 커맨드 라인에서의 옵션 플래그가 존재합니다.:
 
-- optional `--network` flag which changes the depth model being used (recommended default is `fcn-mobilenet`).
-- optional `--visualize` flag which can be comma-separated combinations of `input`, `depth`
-	- The default is `--visualize=input,depth` which displays the input and depth images side-by-side
-	- To view only the depth image, use `--visualize=depth`
-- optional `--depth-size` value which scales the size of the depth map relative to the input (the default is `1.0`)
-- optional `--filter-mode` flag which selects `point` or `linear` filtering used for upsampling (the default is `linear`)
-- optional `--colormap` flag which sets the color mapping to use during visualization (the default is `viridis_inverted`)
+- optional `--network` 플래그는 사용하고자 하는 모델을 바꿀 수 있습니다. (권장되는 default(기본값)은 `fcn-mobilenet`).
+- optional `--visualize` 플래그는 `input`, `depth`의 comma-separated(컴마로 구분되는) 조합입니다.
+	- The default(기본값)은  `--visualize=input,depth` 이며 이는 input 이미지와 depth를 나란히 출력합니다.
+	- depth 이미지만 보고싶다면, `--visualize=depth`를 사용하세요.
+- optional `--depth-size` 플래그는 depth map의 input 이미지에 대한 상대적 스케일 값을 변경할 수 있습니다. (the default(기본값)은 `1.0`)
+- optional `--filter-mode` upsampling을 할 때, 사용할 필터링 방법을 결정합니다. `point` 나 `linear` 중에 선택할 수 있습니다. (the default(기본값)은 `linear`)
+- optional `--colormap` 플래그는 컬러맵을 정합니다. (the default(기본값)은 `viridis_inverted`)
 
-If you're using the [Docker container](aux-docker.md), it's recommended to save the output images to the `images/test` mounted directory.  These images will then be easily viewable from your host device under `jetson-inference/data/images/test` (for more info, see [Mounted Data Volumes](aux-docker.md#mounted-data-volumes)). 
+만약 [Docker container](aux-docker.md)를 사용하고 있다면 결과 이미지를 `images/test` 디렉토리 아래에 저장하는 것을 권장합니다. 그래야 해당 이미지들이 호스트 기기에서 `jetson-inference/data/images/test` 디렉토리 아래를 확인하여 위 결과 이미지들을 볼 수 있기 때문입니다. (자세한 정보는 다음 페이지를 참고하세요. [Mounted Data Volumes](aux-docker.md#mounted-data-volumes))
 
-Here are some examples of mono depth estimation on indoor scenes:
+아래 예제는 실내에서 수행한 mono depth 입니다.
 
 ``` bash
 # C++
@@ -43,10 +44,10 @@ $ ./depthnet.py "images/room_*.jpg" images/test/depth_room_%i.jpg
 
 <img src="https://github.com/dusty-nv/jetson-inference/raw/dev/docs/images/depthnet-room-0.jpg">
 
-> **note**:  the first time you run each model, TensorRT will take a few minutes to optimize the network. <br/>
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this optimized network file is then cached to disk, so future runs using the model will load faster.
+> **note**: 모델을 처음 수행시키면 TensorRT가 모델을 optimize(최적화)하기 때문에 몇 분 정도 소요될 수 있습니다. <br/>
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 위 최적화된 모델은 disk에 캐싱되기 때문에 이후에 모델을 불러올 때는 빠르게 불러와집니다.
 
-And here are some taken from outdoor scenes:
+아래는 바깥에서 mono depth를 수행한 예제 입니다.
 
 ``` bash
 # C++
@@ -58,9 +59,9 @@ $ ./depthnet.py "images/trail_*.jpg" images/test/depth_trail_%i.jpg
 
 <img src="https://github.com/dusty-nv/jetson-inference/raw/dev/docs/images/depthnet-trail-0.jpg">
 
-## Mono Depth from Video 
+## 비디오에서 Mono Depth 
 
-To run mono depth estimation on a live camera stream or video, pass in a device or file path from the [Camera Streaming and Multimedia](aux-streaming.md) page.
+비디오에서 mono depth estimation을 수행하기 위해서 라이브 카메라나 비디오의 디바이스 혹은 파일 패스를 전달해야합니다. 자세한 정보는 다음 페이지를 확인하세요. [Camera Streaming and Multimedia](aux-streaming.md)
 
 ``` bash
 # C++
@@ -72,15 +73,15 @@ $ ./depthnet.py /dev/video0  # csi://0 if using MIPI CSI camera
 
 <a href="https://www.youtube.com/watch?v=3_bU6Eqb4hE" target="_blank"><img src=https://github.com/dusty-nv/jetson-inference/raw/dev/docs/images/depthnet-video-0.jpg width="750"></a>
 
-> **note**:  if the screen is too small to fit the output, you can use `--depth-scale=0.5` to reduce the size <br/>
+> **note**:  만약 화면이 output을 표현하기에 너무 작으면 `--depth-scale=0.5` 옵션을 주어 사이즈를 줄일 수 있습니다.  <br/>
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of the depth image, or reduce the size of the camera with `--input-width=X --input-height=Y`
 
 
-## Getting the Raw Depth Field
+## Depth Field 얻기
 
-If you want to access the raw depth map, you can do so with `depthNet.GetDepthField()`.  This will return a single-channel floating point image that is typically smaller (224x224) than the original input - this represents the raw output of the model.  On the other hand, the colorized depth image used for visualization is upsampled to match the resolution of the original input (or whatever the `--depth-size` scale is set to).
+만약 raw(처리되지 않은) depth map에 접근하고 싶으면 `depthNet.GetDepthField()` 로 이를 받아올 수 있다. 이는 보톤 224x224 보다 작은 하나의 채널을 갖는 floating point 이미지를 return합니다. 이는 모델의 순수한 결과입니다. 반면에 visualization에 사용된 색처리가된 depth 이미지는 원본 이미지의 크기에 맞춰 upsampling된 이미지 입니다. 혹은   `--depth-size`에 의해 적당한 크기로 스케일링된 크기일 것입니다.
 
-Below is Python and C++ pseudocode for accessing the raw depth field:
+아래는 Python, C++ 로 작성된 pseudo 코드 입니다.:
 
 #### Python
 
@@ -143,9 +144,9 @@ while(true)
 }
 ```
 
-Trying to measure absolute distances using mono depth can lead to inaccuracies as it's typically more effective at relative depth estimation.  The range of values in the raw depth field can vary depending on the scene, so these are often re-calculated dynamically.  For example, during visualization histogram equalization is performed on the depth field to distribute the colormap more evenly across the range of depth values.
-	
-Next, we're going to introduce the concepts of [Transfer Learning](pytorch-transfer-learning.md) and train our own DNN models on the Jetson using PyTorch.
+mono depth 이미지만을 가지고 absolute(절대) 거리를 측정하면 부정확한 결과가 나옵니다. 보통 relative(상대적인)거리가 더 정확합니다. raw dapth 이미지는 이미지에 따라 그 범위가 천차만별입니다. 그래서 보통 자동으로 이들의 범위를 다시 계산하여 조정합니다. visualization 히스토그램을 equlization(평탄화)하는 과정에서 depth의 값의 분포를 평평하게 만듭니다. 
+
+다음으로는 [Transfer Learning](pytorch-transfer-learning.md) 에 대한 개념을 배우도록 하겠습니다. 그리고 커스텀 딥러닝 모델을 Pytorch, Jetson을 이용해 훈련시켜보겠습니다.
 
 ##
 <p align="right">Next | <b><a href="pytorch-transfer-learning.md">Transfer Learning with PyTorch</a></b>
