@@ -3,17 +3,19 @@
 <br/>
 <sup>Pose Estimation</sup></s></p>
 
-# Pose Estimation with PoseNet
-Pose estimation consists of locating various body parts (aka keypoints) that form a skeletal topology (aka links). Pose estimation has a variety of applications including gestures, AR/VR, HMI (human/machine interface), and posture/gait correction. [Pre-trained models](#pre-trained-pose-estimation-models) are provided for human body and hand pose estimation that are capable of detecting multiple people per frame.  
+# PoseNet 으로 하는 Pose Estimation
+Pose estimaion은 link라 불리는 skeleton topology(해부학적 위상)를 구성하는 다양한 신체의 일부분들의 (keypoint라고 합니다.) 위치를 찾는 것을 말합니다. Pose estimaion은 제스쳐, AR/VR, HMI (human/machine interface) 그리고 자세 교정등과 같은 다양한 분야에 적용됩니다. 하나의 프레임에 여러 사람이 있어도 한 번에 몸과 혼을 검출할 수 있는 [Pre-trained models](#pre-trained-pose-estimation-models) 이 준비돼 있습니다.  
 
 <img src="https://github.com/dusty-nv/jetson-inference/raw/dev/docs/images/posenet-0.jpg">
 
-The [`poseNet`](../c/poseNet.h) object accepts an image as input, and outputs a list of object poses.  Each object pose contains a list of detected keypoints, along with their locations and links between keypoints.  You can query these to find particular features.  [`poseNet`](../c/poseNet.h) can be used from [Python](https://rawgit.com/dusty-nv/jetson-inference/dev/docs/html/python/jetson.inference.html#poseNet) and [C++](../c/poseNet.h).
+The [`poseNet`](../c/poseNet.h) 은 이미지를 input(입력)으로 받고 각 포즈들의 리스트를 output(출력)으로 합니다. 각 객체들의 pose는 검출된 keypoints와 이들의 위치, 그리고 keypoints 사이의 link들이 포함됩니다. 이들 중에서 필요한 것만 (query)골라 사용할 수 있습니다. [`poseNet`](../c/poseNet.h) 은  [Python](https://rawgit.com/dusty-nv/jetson-inference/dev/docs/html/python/jetson.inference.html#poseNet) and [C++](../c/poseNet.h) 코드로 사용 가능합니다.
 
-As examples of using the `poseNet` class, we provide sample programs for C++ and Python:
+아래는 C++, Python으로 제공된 `poseNet` 예제 프로그램입니다.
 
 - [`posenet.cpp`](../examples/posenet/posenet.cpp) (C++) 
 - [`posenet.py`](../python/examples/posenet.py) (Python) 
+
+
 
 These samples are able to detect the poses of multiple humans in images, videos, and camera feeds.  For more info about the various types of input/output streams supported, see the [Camera Streaming and Multimedia](aux-streaming.md) page.
 
