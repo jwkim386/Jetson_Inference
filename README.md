@@ -1,5 +1,5 @@
-* 해당 repo는 2022-02-14에 작성되었습니다. 새로운 내용이 업데이트 되었을 수 있으니 확인해보시기 바랍니다.
-* 오역이 있다면 언제든 피드백 주세요~
+* Auto: 김준호
+* Date: 2022-02-14
 
 <img src="https://github.com/dusty-nv/jetson-inference/raw/master/docs/images/deep-vision-header.jpg" width="100%">
 
