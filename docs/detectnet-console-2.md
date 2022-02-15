@@ -74,7 +74,7 @@ $ ./detectnet.py images/peds_1.jpg images/test/output.jpg
 ./detectnet.py "images/peds_*.jpg" images/test/peds_output_%i.jpg
 ```
 
-> **note:** 와일드카드를 사용할 때는 quotes(쌍따옴표)(`"*.jpg"`)로 잘 감쌀 수 있도록 합니다. 그리고, OS는 자동으로 해당 인자를 expand(확장)하여 커맨드 라인에 주어진 인자와 순서를 수정합니다. 이는 결과를 덮어쓸 수도 있으니 주의해야합니다.
+> **note:** 와일드카드를 사용할 때는 quotes(쌍따옴표)(`"*.jpg"`)로 잘 감쌀 수 있도록 합니다. 그렇지 않으면, OS는 자동으로 해당 인자를 expand(확장)하여 커맨드 라인에 주어진 인자와 순서를 수정합니다. 이는 결과를 덮어쓸 수도 있으니 주의해야합니다.
 
 이미지들을 loading/saving 하는 것에 대한 더 자세한 정보는 다음 페이지를 참고하세요.  [Camera Streaming and Multimedia](aux-streaming.md#sequences)
 
