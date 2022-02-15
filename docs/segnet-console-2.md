@@ -114,8 +114,8 @@ There are more sample images called `trail-*.jpg` located under the `images/` su
 
 ### Multi-Human Parsing (MHP)
 
-[Multi-Human Parsing](https://lv-mhp.github.io/) provides dense labeling of body parts, like arms, legs, head, and different types of clothing.  
- See the handful of test images named `humans-*.jpg` found under `images/` for trying out the MHP model:
+[Multi-Human Parsing](https://lv-mhp.github.io/) 데이터셋은 다양한 종류의 옷, 팔, 다리, 머리등과 같은 신체 일부분을 조밀하게 라벨링한 데이터셋입니다.
+`images/`아래에 있는 `humans-*.jpg` 테스트 이미지를 MHP 모델에 적용해봅시다.
 
 ``` bash
 # C++
