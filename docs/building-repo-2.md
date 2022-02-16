@@ -3,15 +3,15 @@
 <br/>
 <sup>System Setup</sup></p>   
 
-# Building the Project from Source
+# 소스코드로 프로젝트 설계하기
 
-Provided with the repo is a library of TensorRT-accelerated deep learning networks for image recognition, object detection with localization (i.e. bounding boxes), and semantic segmentation.  This inferencing library (`libjetson-inference`) is intended to be run on the Jetson, and includes support for both C++ and Python.  Various pre-trained DNN models are automatically downloaded to get you up and running quickly.
+이 repo(jetson-inference) 와 함께 이미지 인식, 객체 검출, semantic segmentation을 위한 TensorRT 모델들 (TensorRT-accelerated deep learning networks) 의 library가 함께 제공됐습니다. 이 inference(추론) library (`libjetson-inference`) 는 Jetson에서 (run)수행 되기를 기대하며, C++, Python을 위한 라이브러리입니다. 다양한 pre-trained(훈련된) 모델들이 자동으로 다운 받아져 사용자가 쉽고 빠르게 수행할 수 있습니다.
 
-The latest source code or [Docker container](aux-docker.md) can be used onboard your Jetson once your device has been [flashed with JetPack](jetpack-setup-2.md) or setup with the pre-populated [SD card image](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write).  You can run the pre-built [Docker container](aux-docker.md) without needing to compile the project or install PyTorch yourself.
+[flashed with JetPack](jetpack-setup-2.md) 이거나 [SD card image](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write) 에 이미지 파일을 플래시 하여 구동한 경우 최신 버전의 소스코드나 [Docker container](aux-docker.md)를 Jetson device에서 수행시킬 수 있습니다. 미리 빌드된 [Docker container](aux-docker.md) 를 컴파일이나 pytorch 설치 없이 수행시켜볼 수 있습니다.
 
 ### Quick Reference
 
-If you aren't using the [Docker container](aux-docker.md), here's a condensed form of the commands to build/install the project directly on your Jetson:
+만약 [Docker container](aux-docker.md)를 사용하지 않는다면, 아래 간단히 프로젝트를 build/install 하는 커맨드 라인들이 작성돼있습니다. 
 
 ``` bash
 $ sudo apt-get update
@@ -25,18 +25,19 @@ $ make -j$(nproc)
 $ sudo make install
 $ sudo ldconfig
 ```
-Below we will go through each step and discuss various build options along the way.
- 
-### Cloning the Repo
 
-To download the code, navigate to a folder of your choosing on the Jetson.  First, make sure git and cmake are installed:
+각 과정을 진행하면서 다양한 빌드 옵션에 대해 알아보겠습니다.
+ 
+### repo Cloning(복사)하기
+
+코드를 다운로드 하기 위해서는, 먼저 코드를 clone(복사)하고자 하는 디렉토리로 이동합니다. 그리고 git과 cmake가 설치돼있는지 확인합니다.:
 
 ``` bash
 $ sudo apt-get update
 $ sudo apt-get install git cmake
 ```
 
-Then clone the `jetson-inference` project:
+그리고 `jetson-inference` 를 clone(복사)합니다.:
 
 ``` bash
 $ git clone https://github.com/dusty-nv/jetson-inference
@@ -44,9 +45,9 @@ $ cd jetson-inference
 $ git submodule update --init
 ```
 
-Remember to run the `git submodule update --init` step (or clone with the `--recursive` flag).
+`git submodule update --init` 를 수행하는 것을 기억해야합니다. 혹은 `--recursive` 플래그를 사용합니다.
 
-### Python Development Packages
+### Python Development(개발) Packages(패키지)
 
 The Python functionality of this project is implemented through Python extension modules that provide bindings to the native C++ code using the Python C API.  While configuring the project, the repo searches for versions of Python that have development packages installed on the system, and will then build the bindings for each version of Python that's present (e.g. Python 2.7, 3.6, and 3.7).  It will also build numpy bindings for versions of numpy that are installed.
 
