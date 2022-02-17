@@ -14,7 +14,7 @@ NVIDIA의 **[Jetson Nano/TX1/TX2/Xavier NX/AGX Xavier](http://www.nvidia.com/obj
 
 [Hello AI World](#hello-ai-world) 에서는 jetson platform에서 inference(추론)과 transfer learning을 하는 튜토리얼을 제공합니다. 여기서 직접 datasets을 수집하고 인공신경망을 직접 학습시켜볼 수 있습니다. 이 튜토리얼은 image classification(이미지 분류), object detection(객체 검출), sematic segmentation, pose estimation, mono depth를 다룹니다.
 
-### Table of Contents
+### 
 
 * [Hello AI World](#hello-ai-world)
 * [Video Walkthroughs](#video-walkthroughs)
